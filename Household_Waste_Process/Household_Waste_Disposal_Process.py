@@ -105,7 +105,7 @@ model.summary()
 model.compile(optimizer='adam', loss='categorical_crossentropy',metrics=['accuracy'])
 X = np.array(X)
 y = np.array(y)
-history = model.fit(x=X, y=y, epochs=700)
+history = model.fit(x=X, y=y, epochs=1000)
 
 #예시 리스트
 example_images = list() #empty list
@@ -124,28 +124,13 @@ plot_images(3,5, example_images)
 predict_images = model.predict(example_images)
 print(predict_images)
 
-
-
 fig = plt.Figure()
 (fig, ax) = plt.subplots(3,5,figsize=(10,4))
 for i in range(3):
     for j in range(5):
-        axis = ax[i, j]
-        img_idx = i * 4 + j  # 현재 subplot에 해당하는 이미지 인덱스
-        if img_idx < len(predict_images) and predict_images[img_idx][2] > 0.7:
-            axis.imshow(example_images[img_idx])
+        axis = ax[i,j]
         axis.get_xaxis().set_visible(False)
         axis.get_yaxis().set_visible(False)
+        if predict_images[i * 5 + j][2] > 0.7:
+            axis.imshow(example_images[i*5+j])
 plt.show()
-
-
-#fig = plt.Figure()
-#(fig, ax) = plt.subplots(2,5,figsize=(10,4))
-#for i in range(2):
-#    for j in range(5):
-#        axis = ax[i,j]
-#        axis.get_xaxis().set_visible(False)
-#        axis.get_yaxis().set_visible(False)
-#        if predict_images[i * 5 + j][0] > 0.6:
-#            axis.imshow(example_images[i*5+j])
-#plt.show()
